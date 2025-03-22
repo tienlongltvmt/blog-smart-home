@@ -10,6 +10,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 // Pages
 import HomePage from "./pages/HomePage";
 import NotFound from "./pages/NotFound";
+import Index from "./pages/Index";
 
 // Lazy loaded pages
 const BlogPage = lazy(() => import("./pages/BlogPage"));
@@ -28,7 +29,8 @@ const App = () => (
       <BrowserRouter>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/brands" element={<BrandsPage />} />
