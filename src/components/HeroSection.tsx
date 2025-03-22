@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { BlogPost } from '@/data/blogData';
 
 type HeroSectionProps = {
@@ -10,53 +10,59 @@ type HeroSectionProps = {
 
 const HeroSection = ({ featuredPost }: HeroSectionProps) => {
   return (
-    <section className="relative h-[90vh] overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={featuredPost.featuredImage}
-          alt={featuredPost.title}
-          className="w-full h-full object-cover"
-        />
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
-      </div>
-
-      {/* Content */}
-      <div className="container mx-auto px-4 h-full flex items-center relative z-10">
-        <div className="max-w-2xl text-white animate-fade-up">
-          <div className="mb-4 flex items-center">
-            <span className="text-sm font-medium">Newest Blog</span>
-            <span className="mx-2">•</span>
-            <span className="text-sm text-gray-300">{featuredPost.readTime}</span>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            {featuredPost.title}
-          </h1>
-          
-          <p className="text-lg text-gray-200 mb-8">
-            {featuredPost.excerpt}
-          </p>
-          
-          <div className="flex items-center mb-8">
-            <img
-              src={featuredPost.author.avatar}
-              alt={featuredPost.author.name}
-              className="w-10 h-10 rounded-full mr-4 border-2 border-white"
-            />
-            <div>
-              <p className="font-medium">Written by</p>
-              <p className="text-gray-300">{featuredPost.author.name}</p>
+    <section className="bg-black text-white">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          {/* Left Content */}
+          <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+            <div className="mb-4 flex items-center">
+              <span className="text-sm font-medium">Newest Blog</span>
+              <span className="mx-2">•</span>
+              <span className="text-sm opacity-70">{featuredPost.readTime}</span>
+            </div>
+            
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+              {featuredPost.title}
+            </h1>
+            
+            <p className="text-base md:text-lg opacity-80 mb-8">
+              {featuredPost.excerpt}
+            </p>
+            
+            <div className="flex items-center mb-6">
+              <img
+                src={featuredPost.author.avatar}
+                alt={featuredPost.author.name}
+                className="w-10 h-10 rounded-full mr-3 border border-white/20"
+              />
+              <div>
+                <p className="text-sm opacity-70">Written by</p>
+                <p className="font-medium">{featuredPost.author.name}</p>
+              </div>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <Button asChild variant="outline" className="text-white border-white/30 hover:bg-white/10">
+                <Link to={`/blog/${featuredPost.slug}`}>
+                  Read More
+                </Link>
+              </Button>
+              
+              <Button variant="ghost" size="icon" className="text-white rounded-full opacity-70 hover:opacity-100">
+                <ArrowRight size={20} />
+                <span className="sr-only">Next</span>
+              </Button>
             </div>
           </div>
           
-          <Button asChild size="lg" className="group">
-            <Link to={`/blog/${featuredPost.slug}`}>
-              Read More
-              <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
+          {/* Right Image */}
+          <div className="relative h-full min-h-[400px] bg-gray-800">
+            <img 
+              src={featuredPost.featuredImage}
+              alt={featuredPost.title}
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>

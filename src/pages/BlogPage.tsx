@@ -6,16 +6,23 @@ import Footer from '@/components/Footer';
 import BlogCard from '@/components/BlogCard';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { blogPosts } from '@/data/blogData';
 import { Helmet } from 'react-helmet';
+import HeroSection from '@/components/HeroSection';
 
 const BlogPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   
-  // Filter posts based on search term
+  // Get featured post (first post)
+  const featuredPost = blogPosts[0];
+  
+  // Get top blog posts (excluding the featured one)
+  const topBlogPosts = blogPosts.slice(1, 5);
+  
+  // Filter posts based on search term (for pagination section)
   const filteredPosts = blogPosts.filter(post => 
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
@@ -49,118 +56,149 @@ const BlogPage = () => {
       <div className="flex flex-col min-h-screen">
         <Navbar />
         
-        <main className="flex-grow pt-20">
-          <section className="py-16 bg-gray-50">
+        <main className="flex-grow">
+          {/* Hero Section */}
+          <HeroSection featuredPost={featuredPost} />
+          
+          {/* Blog Header and Search */}
+          <section className="py-12 bg-white">
             <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto text-center mb-12">
-                <h1 className="text-4xl font-bold mb-4">Blog Stuffeus</h1>
-                <p className="text-lg text-gray-600 mb-8">
-                  Discover innovative ideas and solutions for your home and lifestyle
-                </p>
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-3xl font-bold">Blog Stuffeus</h2>
                 
-                <form onSubmit={handleSearch} className="max-w-2xl mx-auto">
-                  <div className="flex items-center bg-white rounded-full border shadow-sm search-animation overflow-hidden">
-                    <div className="pl-4">
-                      <Search className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <Input
-                      type="search"
-                      placeholder="Search on Stuffeus..."
-                      className="flex-grow border-0 focus-visible:ring-0 focus-visible:ring-transparent"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    <Button type="submit" size="sm" className="m-1 rounded-full">Search</Button>
-                  </div>
+                <form onSubmit={handleSearch} className="max-w-xs flex items-center rounded-full border bg-white overflow-hidden">
+                  <Input
+                    type="search"
+                    placeholder="Search on Stuffeus..."
+                    className="border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <Button type="submit" variant="ghost" size="icon" className="rounded-full">
+                    <Search className="h-5 w-5" />
+                  </Button>
                 </form>
               </div>
               
-              {/* Blog Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentPosts.map((post) => (
-                  <BlogCard
-                    key={post.id}
-                    {...post}
-                    className="h-full"
-                  />
-                ))}
-              </div>
-              
-              {/* Show message if no posts match search */}
-              {currentPosts.length === 0 && (
-                <div className="text-center py-10">
-                  <h3 className="text-xl font-medium mb-2">No results found</h3>
-                  <p className="text-gray-600">
-                    We couldn't find any posts matching "{searchTerm}". Please try a different search term.
-                  </p>
-                </div>
-              )}
-              
-              {/* Pagination */}
-              {filteredPosts.length > postsPerPage && (
-                <div className="flex justify-center mt-16">
-                  <div className="flex items-center space-x-2">
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                      disabled={currentPage === 1}
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                    
-                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                      // Logic to show pages centered around current page
-                      let pageNum = i + 1;
-                      if (totalPages > 5) {
-                        if (currentPage > 3) {
-                          pageNum = currentPage + i - 2;
-                          if (pageNum > totalPages) {
-                            pageNum = totalPages - (4 - i);
-                          }
-                        }
-                      }
-                      
-                      return (
-                        <Button 
-                          key={i} 
-                          variant="outline" 
-                          size="sm"
-                          className={
-                            pageNum === currentPage ? "bg-primary text-white hover:bg-primary/90" : ""
-                          }
-                          onClick={() => setCurrentPage(pageNum)}
-                          disabled={pageNum === currentPage}
-                        >
-                          {pageNum}
-                        </Button>
-                      );
-                    })}
-                    
-                    {totalPages > 5 && currentPage < totalPages - 2 && (
-                      <>
-                        <span className="px-2">...</span>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => setCurrentPage(totalPages)}
-                        >
-                          {totalPages}
-                        </Button>
-                      </>
-                    )}
-                    
-                    <Button 
-                      variant="outline" 
-                      size="icon"
-                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                      disabled={currentPage === totalPages}
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </Button>
+              {/* Top Blogs Section */}
+              <div className="mb-16">
+                <h3 className="text-2xl font-bold mb-6">Top Blogs</h3>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* First column - 1 large blog post */}
+                  <div>
+                    <BlogCard
+                      key={topBlogPosts[0].id}
+                      {...topBlogPosts[0]}
+                      variant="large"
+                      className="h-full"
+                    />
+                  </div>
+                  
+                  {/* Second column - 2 smaller blog posts in vertical layout */}
+                  <div className="grid grid-cols-1 gap-8">
+                    {topBlogPosts.slice(1, 3).map(post => (
+                      <BlogCard
+                        key={post.id}
+                        {...post}
+                        variant="horizontal"
+                        className="h-full"
+                      />
+                    ))}
                   </div>
                 </div>
-              )}
+              </div>
+              
+              {/* All Blog Posts with Pagination */}
+              <div>
+                <h3 className="text-2xl font-bold mb-6">All Articles</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {currentPosts.map((post) => (
+                    <BlogCard
+                      key={post.id}
+                      {...post}
+                      className="h-full"
+                    />
+                  ))}
+                </div>
+                
+                {/* Show message if no posts match search */}
+                {currentPosts.length === 0 && (
+                  <div className="text-center py-10">
+                    <h3 className="text-xl font-medium mb-2">No results found</h3>
+                    <p className="text-gray-600">
+                      We couldn't find any posts matching "{searchTerm}". Please try a different search term.
+                    </p>
+                  </div>
+                )}
+                
+                {/* Pagination */}
+                {filteredPosts.length > postsPerPage && (
+                  <div className="flex justify-center mt-16">
+                    <div className="flex items-center space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        // Logic to show pages centered around current page
+                        let pageNum = i + 1;
+                        if (totalPages > 5) {
+                          if (currentPage > 3) {
+                            pageNum = currentPage + i - 2;
+                            if (pageNum > totalPages) {
+                              pageNum = totalPages - (4 - i);
+                            }
+                          }
+                        }
+                        
+                        return (
+                          <Button 
+                            key={i} 
+                            variant="outline" 
+                            size="sm"
+                            className={
+                              pageNum === currentPage ? "bg-primary text-white hover:bg-primary/90" : ""
+                            }
+                            onClick={() => setCurrentPage(pageNum)}
+                            disabled={pageNum === currentPage}
+                          >
+                            {pageNum}
+                          </Button>
+                        );
+                      })}
+                      
+                      {totalPages > 5 && currentPage < totalPages - 2 && (
+                        <>
+                          <span className="px-2">...</span>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => setCurrentPage(totalPages)}
+                          >
+                            {totalPages}
+                          </Button>
+                        </>
+                      )}
+                      
+                      <Button 
+                        variant="outline" 
+                        size="icon"
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </section>
         </main>

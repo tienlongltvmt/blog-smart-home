@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { Clock } from 'lucide-react';
 
 type BlogCardProps = {
   id: string;
@@ -34,15 +35,15 @@ const BlogCard = ({
     <Link 
       to={`/blog/${slug}`}
       className={cn(
-        "blog-card group block rounded-2xl overflow-hidden", 
-        isHorizontal ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "flex flex-col",
+        "blog-card group block rounded-xl overflow-hidden transition-all duration-200 hover:shadow-md", 
+        isHorizontal ? "grid grid-cols-2 gap-4" : "flex flex-col",
         className
       )}
     >
       {/* Image Container */}
       <div className={cn(
-        "image-container overflow-hidden rounded-xl aspect-video", 
-        isHorizontal && "md:order-2"
+        "overflow-hidden rounded-xl aspect-video", 
+        isHorizontal && "order-2"
       )}>
         <img
           src={featuredImage}
@@ -56,10 +57,13 @@ const BlogCard = ({
       <div className={cn(
         "flex flex-col", 
         isLarge ? "p-6" : "p-4", 
-        isHorizontal && "md:order-1 flex justify-center"
+        isHorizontal && "order-1 flex justify-center"
       )}>
         {/* Read Time */}
-        <span className="text-xs text-gray-500 mb-2">{readTime}</span>
+        <div className="flex items-center text-xs text-gray-500 mb-2">
+          <Clock className="h-3 w-3 mr-1" />
+          {readTime}
+        </div>
         
         {/* Title */}
         <h3 className={cn(
@@ -70,18 +74,24 @@ const BlogCard = ({
         </h3>
         
         {/* Excerpt */}
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{excerpt}</p>
+        <p className={cn(
+          "text-gray-600 line-clamp-2",
+          isLarge ? "text-base mb-6" : "text-sm mb-4"
+        )}>
+          {excerpt}
+        </p>
         
         {/* Author */}
         <div className="mt-auto flex items-center">
           <img
             src={author.avatar}
             alt={author.name}
-            className="w-8 h-8 rounded-full mr-3"
+            className="w-8 h-8 rounded-full mr-2"
           />
-          <span className="text-sm text-gray-700">
-            Written by <span className="font-medium">{author.name}</span>
-          </span>
+          <div>
+            <p className="text-xs text-gray-500">Written by</p>
+            <p className="text-sm font-medium">{author.name}</p>
+          </div>
         </div>
       </div>
     </Link>
