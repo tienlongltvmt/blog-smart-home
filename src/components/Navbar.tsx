@@ -1,7 +1,6 @@
-
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Search, Menu, X } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ShoppingCart, User, Search, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -16,8 +15,8 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -31,15 +30,23 @@ const Navbar = () => {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out",
-        isScrolled ? "bg-white bg-opacity-95 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        "fixed top-0 items-center w-full z-50 transition-all duration-300 ease-in-out"
       )}
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div
+        className={cn(
+          "container  mx-auto px-4 md:px-6 rounded-b-lg",
+          isScrolled
+            ? "bg-white bg-opacity-95 backdrop-blur-sm shadow-sm"
+            : "bg-white"
+        )}
+      >
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-xl font-semibold tracking-tight">Stuffeus</span>
+              <span className="text-xl font-semibold tracking-tight">
+                Stuffeus
+              </span>
             </Link>
           </div>
 
@@ -68,8 +75,17 @@ const Navbar = () => {
             </Button>
 
             {/* Mobile Menu Button */}
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMobileMenu}>
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={toggleMobileMenu}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </Button>
           </div>
         </div>
@@ -99,9 +115,17 @@ const Navbar = () => {
 };
 
 // Desktop Navigation Link
-const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
+const NavLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: React.ReactNode;
+}) => {
   const location = useLocation();
-  const isActive = location.pathname === to || (to !== '/' && location.pathname.startsWith(to));
+  const isActive =
+    location.pathname === to ||
+    (to !== "/" && location.pathname.startsWith(to));
 
   return (
     <Link
@@ -119,9 +143,17 @@ const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) =>
 };
 
 // Mobile Navigation Link
-const MobileNavLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
+const MobileNavLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: React.ReactNode;
+}) => {
   const location = useLocation();
-  const isActive = location.pathname === to || (to !== '/' && location.pathname.startsWith(to));
+  const isActive =
+    location.pathname === to ||
+    (to !== "/" && location.pathname.startsWith(to));
 
   return (
     <Link
