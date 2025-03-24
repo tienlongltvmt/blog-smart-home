@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, User, Search, Menu, X } from "lucide-react";
@@ -35,7 +36,7 @@ const Navbar = () => {
     >
       <div
         className={cn(
-          "container  mx-auto px-4 md:px-6 rounded-b-lg",
+          "container mx-auto px-4 md:px-6 rounded-b-lg",
           isScrolled
             ? "bg-white bg-opacity-95 backdrop-blur-sm shadow-sm"
             : "bg-white"
