@@ -12,10 +12,10 @@ import { blogPosts, getRecentPosts } from '@/data/blogData';
 import { Helmet } from 'react-helmet';
 
 const HomePage = () => {
-  // For demonstration purposes, we'll use the first blog post as the featured post
-  const featuredPost = blogPosts[0];
-  const topBlogs = blogPosts.slice(1, 4);
-  const latestBlogs = blogPosts.slice(4, 7);
+  // Use the first 3 blog posts as featured posts
+  const featuredPosts = blogPosts.slice(0, 3);
+  const topBlogs = blogPosts.slice(3, 6);
+  const latestBlogs = blogPosts.slice(6, 9);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -30,7 +30,7 @@ const HomePage = () => {
         <meta property="og:description" content="Discover innovative ideas for home transformation, tech solutions, and lifestyle tips on Stuffeus." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://stuffeus.com" />
-        <meta property="og:image" content={featuredPost.featuredImage} />
+        <meta property="og:image" content={featuredPosts[0].featuredImage} />
       </Helmet>
 
       <div className="flex flex-col min-h-screen">
@@ -38,7 +38,7 @@ const HomePage = () => {
         
         <main className="flex-grow">
           {/* Hero Section */}
-          <HeroSection featuredPost={featuredPost} />
+          <HeroSection featuredPosts={featuredPosts} />
           
           {/* Blog Search */}
           <section className="py-8 bg-white shadow-sm relative z-20 -mt-12 rounded-t-3xl">
@@ -124,3 +124,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
