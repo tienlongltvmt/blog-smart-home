@@ -16,11 +16,11 @@ const BlogPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 6;
   
-  // Get featured post (first post)
-  const featuredPost = blogPosts[0];
+  // Get featured posts (first 3 posts)
+  const featuredPosts = blogPosts.slice(0, 3);
   
-  // Get top blog posts (excluding the featured one)
-  const topBlogPosts = blogPosts.slice(1, 5);
+  // Get top blog posts (excluding the featured ones)
+  const topBlogPosts = blogPosts.slice(3, 7);
   
   // Filter posts based on search term (for pagination section)
   const filteredPosts = blogPosts.filter(post => 
@@ -57,8 +57,8 @@ const BlogPage = () => {
         <Navbar />
         
         <main className="flex-grow">
-          {/* Hero Section */}
-          <HeroSection featuredPost={featuredPost} />
+          {/* Hero Section with Carousel */}
+          <HeroSection featuredPosts={featuredPosts} />
           
           {/* Blog Header and Search */}
           <section className="py-12 bg-white">
