@@ -15,6 +15,7 @@ import Index from "./pages/Index";
 // Lazy loaded pages
 const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogPostPage = lazy(() => import("./pages/BlogPostPage"));
+const CreateBlogPostPage = lazy(() => import("./pages/CreateBlogPostPage"));
 const BrandsPage = lazy(() => import("./pages/BrandsPage"));
 const ShopPage = lazy(() => import("./pages/ShopPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/home" element={<HomePage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/blog/create" element={<CreateBlogPostPage />} />
             <Route path="/brands" element={<BrandsPage />} />
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/about" element={<AboutPage />} />

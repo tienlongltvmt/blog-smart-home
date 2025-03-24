@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -6,7 +5,7 @@ import Footer from '@/components/Footer';
 import BlogCard from '@/components/BlogCard';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, PlusCircle } from 'lucide-react';
 import { blogPosts } from '@/data/blogData';
 import { Helmet } from 'react-helmet';
 import HeroSection from '@/components/HeroSection';
@@ -66,18 +65,27 @@ const BlogPage = () => {
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-bold">Blog Stuffeus</h2>
                 
-                <form onSubmit={handleSearch} className="max-w-xs flex items-center rounded-full border bg-white overflow-hidden">
-                  <Input
-                    type="search"
-                    placeholder="Search on Stuffeus..."
-                    className="border-0 focus-visible:ring-0 focus-visible:ring-transparent"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                  <Button type="submit" variant="ghost" size="icon" className="rounded-full">
-                    <Search className="h-5 w-5" />
+                <div className="flex items-center gap-4">
+                  <form onSubmit={handleSearch} className="max-w-xs flex items-center rounded-full border bg-white overflow-hidden">
+                    <Input
+                      type="search"
+                      placeholder="Search on Stuffeus..."
+                      className="border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <Button type="submit" variant="ghost" size="icon" className="rounded-full">
+                      <Search className="h-5 w-5" />
+                    </Button>
+                  </form>
+                  
+                  <Button asChild variant="default">
+                    <Link to="/blog/create">
+                      <PlusCircle className="h-4 w-4 mr-2" />
+                      Create Post
+                    </Link>
                   </Button>
-                </form>
+                </div>
               </div>
               
               {/* Top Blogs Section */}
