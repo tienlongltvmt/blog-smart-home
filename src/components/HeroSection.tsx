@@ -18,8 +18,8 @@ type HeroSectionProps = {
 const HeroSection = ({ featuredPosts }: HeroSectionProps) => {
   return (
     <section className="bg-black text-white pt-8">
-      <div className="container mx-auto">
-        <Carousel className="relative">
+      <div className="container mx-auto p-4 ">
+        <Carousel className="relative ">
           <CarouselContent>
             {featuredPosts.map((post) => (
               <CarouselItem key={post.id}>
@@ -58,18 +58,9 @@ const HeroSection = ({ featuredPosts }: HeroSectionProps) => {
                       <Button
                         asChild
                         variant="outline"
-                        className="text-white border-white/30 hover:bg-white/10"
+                        className="hover:text-white text-black border-white/30 hover:bg-white/10"
                       >
                         <Link to={`/blog/${post.slug}`}>Read More</Link>
-                      </Button>
-
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="text-white rounded-full opacity-70 hover:opacity-100"
-                      >
-                        <ArrowRight size={20} />
-                        <span className="sr-only">Next</span>
                       </Button>
                     </div>
                   </div>
@@ -86,15 +77,15 @@ const HeroSection = ({ featuredPosts }: HeroSectionProps) => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          
+
           <div className="absolute bottom-4 right-4 z-10 flex gap-2 md:bottom-8 md:right-8">
-            <CarouselPrevious 
+            <CarouselPrevious
               className={cn(
                 "relative h-8 w-8 rounded-full border border-white/30 bg-black/50 text-white hover:bg-black/80",
                 "left-0 -translate-y-0"
               )}
             />
-            <CarouselNext 
+            <CarouselNext
               className={cn(
                 "relative h-8 w-8 rounded-full border border-white/30 bg-black/50 text-white hover:bg-black/80",
                 "right-0 -translate-y-0"
